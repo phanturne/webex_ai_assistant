@@ -46,36 +46,35 @@ export default function Component() {
 
   const notifications = [
     // Speech Clarity and Articulation
-    "Reduce filler words like 'um' or 'uh' for clearer delivery.",
-    "Try to avoid repeating words unnecessarily.",
-    "Maintain a steady flow; avoid long pauses that can disrupt pacing.",
+    "Avoid filler words for a smoother delivery.",
+    "Try not to repeat words unnecessarily.",
+    "Keep a steady flow; avoid long pauses.",
 
     // Pacing and Speech Rate
-    "Adjust your pace—aim for around 140-160 words per minute for better clarity.",
-    "Try to keep a steady pace, especially during key points.",
+    "Slow down slightly for better clarity.",
+    "Maintain a steady pace, especially on key points.",
 
     // Tone and Pitch Variation
-    "Add variation to your tone to avoid sounding monotone.",
-    "Emphasize key words by raising or lowering your pitch slightly.",
+    "Add variety to your tone to keep it engaging.",
+    "Emphasize key words for impact.",
 
     // Body Language and Facial Expressions (if video is on)
-    "Look at the camera to create a stronger connection with viewers.",
-    "Smile occasionally to convey friendliness and warmth.",
-    "Maintain an open posture to appear more approachable.",
+    "Look at the camera to connect with your audience.",
+    "A smile here can help convey warmth.",
+    "Keep an open posture for a welcoming presence.",
 
     // Word Choice and Vocabulary
-    "Consider simpler language to make ideas more accessible.",
-    "Avoid jargon or overly technical terms when speaking to a general audience.",
+    "Simplify language for easier understanding.",
+    "Avoid jargon for a broader audience reach.",
 
     // Confidence and Emotional Analysis
-    "Speak at a steady volume to convey confidence.",
-    "Keep your voice steady to maintain a calm, assured tone.",
+    "Speak at a steady volume for confidence.",
+    "Maintain a calm, steady tone to sound assured.",
 
     // Energy and Enthusiasm
-    "Add energy by varying your volume and pitch.",
-    "Use more animated facial expressions to convey enthusiasm."
+    "Add energy by varying volume and tone.",
+    "Use more expressive facial cues to show enthusiasm."
   ];
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -120,14 +119,13 @@ export default function Component() {
   return (
     <div className={`min-h-screen w-full flex ${isDarkMode ? 'dark' : ''}`}>
       <div className="flex-1 p-4 bg-background text-foreground">
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <div className="lg:col-span-3">
             <Card className="mb-4">
               <CardContent className="p-0 relative">
                 <div className="aspect-video bg-muted relative overflow-hidden">
                   <iframe
-                    src="https://www.youtube.com/embed/3nWH0qr45ME?autoplay=1&mute=1&controls=0&loop=1&playlist=HrUWMNIoogM"
+                    src="https://www.youtube.com/embed/3nWH0qr45ME?autoplay=1&mute=1&controls=0&loop=1"
                     className="w-full h-full"
                     allowFullScreen
                     frameBorder="0"
@@ -140,11 +138,13 @@ export default function Component() {
                         animate={{opacity: 1, y: 0}}
                         exit={{opacity: 0, y: -50}}
                         transition={{duration: 0.3}}
-                        className="absolute top-4 left-1/2 transform -translate-x-1/2"
+                        className="absolute top-4 left-0 right-0 flex justify-center"
                       >
-                        <Alert className="w-64">
-                          <AlertCircle className="h-4 w-4"/>
-                          <AlertDescription>{notification}</AlertDescription>
+                        <Alert className="max-w-96">
+                          <div className="flex items-center gap-2">
+                            <AlertCircle className="h-4 w-4 flex-shrink-0"/>
+                            <AlertDescription>{notification}</AlertDescription>
+                          </div>
                         </Alert>
                       </motion.div>
                     )}
@@ -342,34 +342,7 @@ export default function Component() {
                             </LineChart>
                           </ResponsiveContainer>
                         </div>
-                        <div className="mt-4">
-                          <p className="font-semibold mb-2">Clarity Over Time</p>
-                          <ResponsiveContainer width="100%" height={100}>
-                            <LineChart data={clarityChartData}>
-                              <CartesianGrid strokeDasharray="3 3"/>
-                              <XAxis
-                                dataKey="time"
-                                type="number"
-                                domain={['dataMin', 'dataMax']}
-                                tickFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
-                                hide
-                              />
-                              <YAxis domain={[0, 100]} hide/>
-                              <Tooltip
-                                labelFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
-                                formatter={(value) => [`${value.toFixed(1)}%`, 'Clarity']}
-                              />
-                              <Line
-                                type="monotone"
-                                dataKey="clarity"
-                                stroke="#22c55e"
-                                strokeWidth={2}
-                                dot={false}
-                                animationDuration={300}
-                              />
-                            </LineChart>
-                          </ResponsiveContainer>
-                        </div>
+
                       </div>
                     </CardContent>
                   </Card>
