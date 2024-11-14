@@ -1,6 +1,6 @@
 # Webex AI Speech Assistant Prototype
 
-This is a nonfunctional prototype of a Webex AI speech assistant. It is built using Next.js and Tailwind CSS.
+This is a nonfunctional prototype of a Webex AI speech assistant for 2024 Catalyst HackAIthon @ Cisco.
 
 ## Core Ideas
 
@@ -10,6 +10,9 @@ This is a nonfunctional prototype of a Webex AI speech assistant. It is built us
   look more engaged
 - Post-Session Summary: Offer an interactive dashboard or report with highlights on pacing, engagement, filler word
   count, and more.
+
+![Meeting](public/meeting.png)
+![Meeting Summary](public/meeting-summary.png)
 
 ## Getting Started
 

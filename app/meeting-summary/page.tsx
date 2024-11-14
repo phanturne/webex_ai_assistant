@@ -64,14 +64,14 @@ export default function WebexEnhancedAIAnalysis() {
     }
   }
 
-  const renderMetricCard = (title: string, score: number, icon: React.ReactNode, description: string) => (
+  const renderMetricCard = (title: string, score: number, icon: React.ReactNode, description: string, hidePercentage = false) => (
     <Card className="bg-white shadow-md">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-[#005073]">{title}</CardTitle>
         {icon}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-[#005073]">{score}%</div>
+        <div className="text-2xl font-bold text-[#005073]">{score}{hidePercentage ? "" : "%"}</div>
         <p className="text-xs text-[#6d6e71]">{description}</p>
       </CardContent>
     </Card>
@@ -85,14 +85,14 @@ export default function WebexEnhancedAIAnalysis() {
         {renderMetricCard("Speech Clarity", aiAnalysis.clarity.score, <Mic
           className="h-4 w-4 text-[#00bceb]"/>, "Filler words and articulation")}
         {renderMetricCard("Pacing", aiAnalysis.pacing.averageWPM, <TrendingUp
-          className="h-4 w-4 text-[#00bceb]"/>, "Words per minute")}
+          className="h-4 w-4 text-[#00bceb]"/>, "Words per minute", true)}
         {renderMetricCard("Energy", aiAnalysis.energy.overallScore, <Zap
           className="h-4 w-4 text-[#00bceb]"/>, "Vocal variety and expressions")}
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="bg-white rounded-lg shadow-md">
         <TabsList className="grid w-full grid-cols-7 bg-[#00bceb] rounded-t-lg">
-          {["clarity", "pacing", "tone", "body Language", "vocabulary", "confidence", "energy"].map((tab) => (
+          {["clarity", "pacing", "tone", "body language", "vocabulary", "confidence", "energy"].map((tab) => (
             <TabsTrigger
               key={tab}
               value={tab}
@@ -166,7 +166,7 @@ export default function WebexEnhancedAIAnalysis() {
               </Alert>
             </div>
           </TabsContent>
-          <TabsContent value="bodyLanguage">
+          <TabsContent value="body language">
             <h2 className="text-2xl font-semibold mb-4 text-[#005073]">Body Language and Facial Expressions</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-3 gap-4">
