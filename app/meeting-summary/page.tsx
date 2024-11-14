@@ -64,14 +64,14 @@ export default function EnhancedAIAnalysis() {
     }
   }
 
-  const renderMetricCard = (title: string, score: number, icon: React.ReactNode, description: string) => (
+  const renderMetricCard = (title: string, score: number, icon: React.ReactNode, description: string, hidePercentage = false) => (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         {icon}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{score}%</div>
+        <div className="text-2xl font-bold">{score}{!hidePercentage ? "%" : ""}</div>
         <p className="text-xs text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
@@ -85,7 +85,7 @@ export default function EnhancedAIAnalysis() {
         {renderMetricCard("Speech Clarity", aiAnalysis.clarity.score, <Mic
           className="h-4 w-4 text-muted-foreground"/>, "Filler words and articulation")}
         {renderMetricCard("Pacing", aiAnalysis.pacing.averageWPM, <TrendingUp
-          className="h-4 w-4 text-muted-foreground"/>, "Words per minute")}
+          className="h-4 w-4 text-muted-foreground"/>, "Words per minute", true)}
         {renderMetricCard("Energy", aiAnalysis.energy.overallScore, <Zap
           className="h-4 w-4 text-muted-foreground"/>, "Vocal variety and expressions")}
       </div>
