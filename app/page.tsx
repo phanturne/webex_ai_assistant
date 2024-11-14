@@ -1,27 +1,38 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Mic, MicOff, Video, VideoOff, PhoneOff, MonitorUp, MessageSquare, Users, Brain, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react'
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { motion, AnimatePresence } from 'framer-motion'
+import {useEffect, useState} from 'react'
+import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {AnimatePresence, motion} from "framer-motion";
+import {Alert, AlertDescription} from "@/components/ui/alert";
+import {
+  AlertCircle,
+  Brain,
+  ChevronDown,
+  ChevronUp,
+  MessageSquare,
+  Mic,
+  MonitorUp,
+  PhoneOff,
+  Users,
+  Video
+} from "lucide-react";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import {ScrollArea} from "@/components/ui/scroll-area";
+import {Input} from "@/components/ui/input";
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
+import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
 export default function Component() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(true) // Set default to true
   const [isCollapsed, setIsCollapsed] = useState(true)
   const [aiAnalysis, setAiAnalysis] = useState({
     speed: 120,
     clarity: 75,
     fillerWords: [
-      { word: 'um', count: 3 },
-      { word: 'like', count: 2 },
-      { word: 'you know', count: 1 },
+      {word: 'um', count: 3},
+      {word: 'like', count: 2},
+      {word: 'you know', count: 1},
     ],
     pitch: 60,
     volume: 70,
@@ -34,14 +45,37 @@ export default function Component() {
   const [showNotification, setShowNotification] = useState(false)
 
   const notifications = [
-    "Try to vary your tone for emphasis on key points.",
-    "Remember to pause briefly between main ideas.",
-    "Make eye contact with different areas of your audience.",
-    "Use hand gestures to illustrate your points.",
-    "Slow down slightly to improve clarity.",
-    "Consider using a rhetorical question to engage the audience.",
-    "Summarize your main points before moving to the next section."
-  ]
+    // Speech Clarity and Articulation
+    "Reduce filler words like 'um' or 'uh' for clearer delivery.",
+    "Try to avoid repeating words unnecessarily.",
+    "Maintain a steady flow; avoid long pauses that can disrupt pacing.",
+
+    // Pacing and Speech Rate
+    "Adjust your pace—aim for around 140-160 words per minute for better clarity.",
+    "Try to keep a steady pace, especially during key points.",
+
+    // Tone and Pitch Variation
+    "Add variation to your tone to avoid sounding monotone.",
+    "Emphasize key words by raising or lowering your pitch slightly.",
+
+    // Body Language and Facial Expressions (if video is on)
+    "Look at the camera to create a stronger connection with viewers.",
+    "Smile occasionally to convey friendliness and warmth.",
+    "Maintain an open posture to appear more approachable.",
+
+    // Word Choice and Vocabulary
+    "Consider simpler language to make ideas more accessible.",
+    "Avoid jargon or overly technical terms when speaking to a general audience.",
+
+    // Confidence and Emotional Analysis
+    "Speak at a steady volume to convey confidence.",
+    "Keep your voice steady to maintain a calm, assured tone.",
+
+    // Energy and Enthusiasm
+    "Add energy by varying your volume and pitch.",
+    "Use more animated facial expressions to convey enthusiasm."
+  ];
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -65,16 +99,16 @@ export default function Component() {
 
   useEffect(() => {
     const time = new Date().getTime()
-    setSpeedChartData(prev => [...prev, { time, speed: aiAnalysis.speed }].slice(-10))
-    setClarityChartData(prev => [...prev, { time, clarity: aiAnalysis.clarity }].slice(-10))
+    setSpeedChartData(prev => [...prev, {time, speed: aiAnalysis.speed}].slice(-10))
+    setClarityChartData(prev => [...prev, {time, clarity: aiAnalysis.clarity}].slice(-10))
   }, [aiAnalysis])
 
   useEffect(() => {
     const showInterval = setInterval(() => {
       setShowNotification(true)
       setNotification(notifications[Math.floor(Math.random() * notifications.length)])
-      setTimeout(() => setShowNotification(false), 2000)
-    }, 3000)
+      setTimeout(() => setShowNotification(false), 3000)
+    }, 9000)
 
     return () => clearInterval(showInterval)
   }, [])
@@ -84,37 +118,32 @@ export default function Component() {
   }
 
   return (
-    <div className={`min-h-screen w-full ${isDarkMode ? 'dark' : ''}`}>
-      <div className="container mx-auto p-4 bg-background text-foreground">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">Enhanced AI Video Meeting</h1>
-          <Button onClick={toggleDarkMode} variant="outline">
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </Button>
-        </div>
+    <div className={`min-h-screen w-full flex ${isDarkMode ? 'dark' : ''}`}>
+      <div className="flex-1 p-4 bg-background text-foreground">
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <div className="lg:col-span-3">
             <Card className="mb-4">
               <CardContent className="p-0 relative">
                 <div className="aspect-video bg-muted relative overflow-hidden">
-                  <video
-                    src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                    className="w-full h-full object-cover"
-                    autoPlay
-                    loop
-                    muted
-                  />
+                  <iframe
+                    src="https://www.youtube.com/embed/3nWH0qr45ME?autoplay=1&mute=1&controls=0&loop=1&playlist=HrUWMNIoogM"
+                    className="w-full h-full"
+                    allowFullScreen
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
                   <AnimatePresence>
                     {showNotification && (
                       <motion.div
-                        initial={{ opacity: 0, y: -50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -50 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{opacity: 0, y: -50}}
+                        animate={{opacity: 1, y: 0}}
+                        exit={{opacity: 0, y: -50}}
+                        transition={{duration: 0.3}}
                         className="absolute top-4 left-1/2 transform -translate-x-1/2"
                       >
                         <Alert className="w-64">
-                          <AlertCircle className="h-4 w-4" />
+                          <AlertCircle className="h-4 w-4"/>
                           <AlertDescription>{notification}</AlertDescription>
                         </Alert>
                       </motion.div>
@@ -127,7 +156,7 @@ export default function Component() {
                       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80"
                     ].map((src, i) => (
                       <div key={i} className="w-24 h-16 bg-muted-foreground overflow-hidden rounded">
-                        <img src={src} alt={`Participant ${i + 1}`} className="w-full h-full object-cover" />
+                        <img src={src} alt={`Participant ${i + 1}`} className="w-full h-full object-cover"/>
                       </div>
                     ))}
                   </div>
@@ -136,25 +165,25 @@ export default function Component() {
             </Card>
             <div className="flex justify-center space-x-4 mb-4">
               <Button variant="outline" size="icon">
-                <Mic className="h-4 w-4" />
+                <Mic className="h-4 w-4"/>
               </Button>
               <Button variant="outline" size="icon">
-                <Video className="h-4 w-4" />
+                <Video className="h-4 w-4"/>
               </Button>
               <Button variant="outline" size="icon">
-                <MonitorUp className="h-4 w-4" />
+                <MonitorUp className="h-4 w-4"/>
               </Button>
               <Button variant="destructive" size="icon">
-                <PhoneOff className="h-4 w-4" />
+                <PhoneOff className="h-4 w-4"/>
               </Button>
             </div>
           </div>
           <div className="lg:col-span-1">
             <Tabs defaultValue="participants" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="participants"><Users className="h-4 w-4 mr-2" />Participants</TabsTrigger>
-                <TabsTrigger value="chat"><MessageSquare className="h-4 w-4 mr-2" />Chat</TabsTrigger>
-                <TabsTrigger value="ai"><Brain className="h-4 w-4 mr-2" />AI Analysis</TabsTrigger>
+                <TabsTrigger value="participants"><Users className="h-4 w-4 mr-2"/>Participants</TabsTrigger>
+                <TabsTrigger value="chat"><MessageSquare className="h-4 w-4 mr-2"/>Chat</TabsTrigger>
+                <TabsTrigger value="ai"><Brain className="h-4 w-4 mr-2"/>AI Analysis</TabsTrigger>
               </TabsList>
               <ScrollArea className="h-[calc(100vh-200px)]">
                 <TabsContent value="participants">
@@ -169,10 +198,10 @@ export default function Component() {
                             <span>{name}</span>
                             <div className="flex space-x-2">
                               <Button variant="ghost" size="icon">
-                                <Mic className="h-4 w-4" />
+                                <Mic className="h-4 w-4"/>
                               </Button>
                               <Button variant="ghost" size="icon">
-                                <Video className="h-4 w-4" />
+                                <Video className="h-4 w-4"/>
                               </Button>
                             </div>
                           </li>
@@ -198,7 +227,7 @@ export default function Component() {
                         </div>
                       </div>
                       <div className="flex space-x-2">
-                        <Input placeholder="Type a message..." />
+                        <Input placeholder="Type a message..."/>
                         <Button>Send</Button>
                       </div>
                     </CardContent>
@@ -214,14 +243,17 @@ export default function Component() {
                         <div>
                           <p className="font-semibold">Speaking Speed</p>
                           <div className="w-full bg-muted rounded-full h-2.5">
-                            <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${(aiAnalysis.speed - 80) / 0.8}%` }}></div>
+                            <div className="bg-blue-600 h-2.5 rounded-full"
+                                 style={{width: `${(aiAnalysis.speed - 80) / 0.8}%`}}></div>
                           </div>
-                          <p className="text-sm text-muted-foreground">{aiAnalysis.speed.toFixed(1)} words per minute</p>
+                          <p className="text-sm text-muted-foreground">{aiAnalysis.speed.toFixed(1)} words per
+                            minute</p>
                         </div>
                         <div>
                           <p className="font-semibold">Clarity</p>
                           <div className="w-full bg-muted rounded-full h-2.5">
-                            <div className="bg-green-600 h-2.5 rounded-full" style={{ width: `${aiAnalysis.clarity}%` }}></div>
+                            <div className="bg-green-600 h-2.5 rounded-full"
+                                 style={{width: `${aiAnalysis.clarity}%`}}></div>
                           </div>
                           <p className="text-sm text-muted-foreground">{aiAnalysis.clarity.toFixed(1)}% clear speech</p>
                         </div>
@@ -239,37 +271,46 @@ export default function Component() {
                           <CollapsibleTrigger asChild>
                             <Button variant="outline" className="w-full">
                               {isCollapsed ? 'Show More Metrics' : 'Hide Metrics'}
-                              {isCollapsed ? <ChevronDown className="h-4 w-4 ml-2" /> : <ChevronUp className="h-4 w-4 ml-2" />}
+                              {isCollapsed ? <ChevronDown className="h-4 w-4 ml-2"/> :
+                                <ChevronUp className="h-4 w-4 ml-2"/>}
                             </Button>
                           </CollapsibleTrigger>
                           <CollapsibleContent className="space-y-4 mt-4">
                             <div>
                               <p className="font-semibold">Pitch Variation</p>
                               <div className="w-full bg-muted rounded-full h-2.5">
-                                <div className="bg-yellow-600 h-2.5 rounded-full" style={{ width: `${aiAnalysis.pitch}%` }}></div>
+                                <div className="bg-yellow-600 h-2.5 rounded-full"
+                                     style={{width: `${aiAnalysis.pitch}%`}}></div>
                               </div>
-                              <p className="text-sm text-muted-foreground">{aiAnalysis.pitch.toFixed(1)}% pitch variation</p>
+                              <p className="text-sm text-muted-foreground">{aiAnalysis.pitch.toFixed(1)}% pitch
+                                variation</p>
                             </div>
                             <div>
                               <p className="font-semibold">Volume Modulation</p>
                               <div className="w-full bg-muted rounded-full h-2.5">
-                                <div className="bg-purple-600 h-2.5 rounded-full" style={{ width: `${aiAnalysis.volume}%` }}></div>
+                                <div className="bg-purple-600 h-2.5 rounded-full"
+                                     style={{width: `${aiAnalysis.volume}%`}}></div>
                               </div>
-                              <p className="text-sm text-muted-foreground">{aiAnalysis.volume.toFixed(1)}% volume variation</p>
+                              <p className="text-sm text-muted-foreground">{aiAnalysis.volume.toFixed(1)}% volume
+                                variation</p>
                             </div>
                             <div>
                               <p className="font-semibold">Sentence Complexity</p>
                               <div className="w-full bg-muted rounded-full h-2.5">
-                                <div className="bg-red-600 h-2.5 rounded-full" style={{ width: `${aiAnalysis.sentenceComplexity}%` }}></div>
+                                <div className="bg-red-600 h-2.5 rounded-full"
+                                     style={{width: `${aiAnalysis.sentenceComplexity}%`}}></div>
                               </div>
-                              <p className="text-sm text-muted-foreground">{aiAnalysis.sentenceComplexity.toFixed(1)}% complexity</p>
+                              <p className="text-sm text-muted-foreground">{aiAnalysis.sentenceComplexity.toFixed(1)}%
+                                complexity</p>
                             </div>
                             <div>
                               <p className="font-semibold">Posture and Body Language</p>
                               <div className="w-full bg-muted rounded-full h-2.5">
-                                <div className="bg-pink-600 h-2.5 rounded-full" style={{ width: `${aiAnalysis.posture}%` }}></div>
+                                <div className="bg-pink-600 h-2.5 rounded-full"
+                                     style={{width: `${aiAnalysis.posture}%`}}></div>
                               </div>
-                              <p className="text-sm text-muted-foreground">{aiAnalysis.posture.toFixed(1)}% positive body language</p>
+                              <p className="text-sm text-muted-foreground">{aiAnalysis.posture.toFixed(1)}% positive
+                                body language</p>
                             </div>
                           </CollapsibleContent>
                         </Collapsible>
@@ -277,7 +318,7 @@ export default function Component() {
                           <p className="font-semibold mb-2">Speaking Speed Over Time</p>
                           <ResponsiveContainer width="100%" height={100}>
                             <LineChart data={speedChartData}>
-                              <CartesianGrid strokeDasharray="3 3" />
+                              <CartesianGrid strokeDasharray="3 3"/>
                               <XAxis
                                 dataKey="time"
                                 type="number"
@@ -285,7 +326,7 @@ export default function Component() {
                                 tickFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
                                 hide
                               />
-                              <YAxis domain={[80, 160]} hide />
+                              <YAxis domain={[80, 160]} hide/>
                               <Tooltip
                                 labelFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
                                 formatter={(value) => [`${value.toFixed(1)} wpm`, 'Speed']}
@@ -305,7 +346,7 @@ export default function Component() {
                           <p className="font-semibold mb-2">Clarity Over Time</p>
                           <ResponsiveContainer width="100%" height={100}>
                             <LineChart data={clarityChartData}>
-                              <CartesianGrid strokeDasharray="3 3" />
+                              <CartesianGrid strokeDasharray="3 3"/>
                               <XAxis
                                 dataKey="time"
                                 type="number"
@@ -313,7 +354,7 @@ export default function Component() {
                                 tickFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
                                 hide
                               />
-                              <YAxis domain={[0, 100]} hide />
+                              <YAxis domain={[0, 100]} hide/>
                               <Tooltip
                                 labelFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
                                 formatter={(value) => [`${value.toFixed(1)}%`, 'Clarity']}
