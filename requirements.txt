@@ -1,0 +1,12 @@
+flask
+flask-cors
+flask-socketio
+openai-whisper
+librosa
+torch
+numpy
+python-socketio
+python-engineio
+gunicorn
+dataclasses
+transformers
